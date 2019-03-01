@@ -43,12 +43,12 @@ while alive:
 
     #draw grass
     pygame.draw.rect(screen, GRASS, [0, GRASSSTART, WIDTH, GRASSHEIGHT], 0)
-    pygame.draw.rect(screen, (0,0,0), [-1, GRASSSTART, WIDTH+2, GRASSHEIGHT], 1)
+    pygame.draw.rect(screen, (10,100,10), [-1, GRASSSTART, WIDTH+2, GRASSHEIGHT], 1)
 
     
     #draws road
     pygame.draw.rect(screen, ROAD, [0, ROADSTART, WIDTH, ROADHEIGHT], 0)
-    pygame.draw.rect(screen, (200,200,200), [-2, ROADSTART, WIDTH+4, ROADHEIGHT], 2)
+    pygame.draw.rect(screen, (100,100,100), [-2, ROADSTART, WIDTH+4, ROADHEIGHT], 2)
 
 
     #draws yellow line (lane)
