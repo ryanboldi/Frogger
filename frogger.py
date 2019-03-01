@@ -8,7 +8,17 @@ GRASS = (124, 252, 0)
 YELLOW = (250, 252, 0)
 SKY = (0, 250, 252)
 
-screen = pygame.display.set_mode((800, 500))
+#sizes
+LANES = 3
+ROADHEIGHT = 300
+
+WIDTH = 800
+HEIGHT = 500
+
+LANESIZE = ROADHEIGHT/LANES
+GRASSHEIGHT = ROADHEIGHT + 2*(LANESIZE) #LANESIZE on each side
+
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('frogger')
 
 # checks if player is alive
@@ -23,9 +33,19 @@ while alive:
         if event.type == pygame.QUIT:
             alive = False
 
+    #draws background
     screen.fill(SKY)
 
-    pygame.draw.rect(screen, ROAD, [0, 30, 800, 300], 0)
+    #draw grass
+    pygame.draw.rect(screen, GRASS, [0, (HEIGHT-GRASSHEIGHT)/2, WIDTH, GRASSHEIGHT], 0)
+    pygame.draw.rect(screen, (0,0,0), [-1, (HEIGHT-GRASSHEIGHT)/2, WIDTH+2, GRASSHEIGHT], 1)
+
+    #draws road
+    pygame.draw.rect(screen, ROAD, [0, (HEIGHT-ROADHEIGHT)/2, WIDTH, ROADHEIGHT], 0)
+    pygame.draw.rect(screen, (0,0,0), [-1, (HEIGHT-ROADHEIGHT)/2, WIDTH+2, ROADHEIGHT], 1)
+
+    
+
 
     # update screen
     pygame.display.flip()
