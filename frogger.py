@@ -9,7 +9,7 @@ YELLOW = (250, 252, 0)
 SKY = (0, 250, 252)
 
 #sizes
-LANES = 3
+LANES = 5
 ROADHEIGHT = 300
 
 WIDTH = 800
@@ -17,6 +17,11 @@ HEIGHT = 500
 
 LANESIZE = ROADHEIGHT/LANES
 GRASSHEIGHT = ROADHEIGHT + 2*(LANESIZE) #LANESIZE on each side
+
+#consts to help with runtime
+ROADSTART = (HEIGHT-ROADHEIGHT)/2
+GRASSSTART = (HEIGHT - GRASSHEIGHT)/2
+
 
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('frogger')
@@ -37,12 +42,18 @@ while alive:
     screen.fill(SKY)
 
     #draw grass
-    pygame.draw.rect(screen, GRASS, [0, (HEIGHT-GRASSHEIGHT)/2, WIDTH, GRASSHEIGHT], 0)
-    pygame.draw.rect(screen, (0,0,0), [-1, (HEIGHT-GRASSHEIGHT)/2, WIDTH+2, GRASSHEIGHT], 1)
+    pygame.draw.rect(screen, GRASS, [0, GRASSSTART, WIDTH, GRASSHEIGHT], 0)
+    pygame.draw.rect(screen, (0,0,0), [-1, GRASSSTART, WIDTH+2, GRASSHEIGHT], 1)
 
+    
     #draws road
-    pygame.draw.rect(screen, ROAD, [0, (HEIGHT-ROADHEIGHT)/2, WIDTH, ROADHEIGHT], 0)
-    pygame.draw.rect(screen, (0,0,0), [-1, (HEIGHT-ROADHEIGHT)/2, WIDTH+2, ROADHEIGHT], 1)
+    pygame.draw.rect(screen, ROAD, [0, ROADSTART, WIDTH, ROADHEIGHT], 0)
+    pygame.draw.rect(screen, (200,200,200), [-2, ROADSTART, WIDTH+4, ROADHEIGHT], 2)
+
+
+    #draws yellow line (lane)
+    for i in range(1, LANES):
+        pygame.draw.line(screen, YELLOW, [0, ROADSTART + (LANESIZE*i) - 0.5],[WIDTH, ROADSTART+(LANESIZE*i) - 0.5], 1)
 
     
 
