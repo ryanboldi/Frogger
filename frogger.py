@@ -10,7 +10,7 @@ YELLOW = (250, 252, 0)
 SKY = (0, 250, 252)
 
 #sizes
-LANES = 5
+LANES = 3
 ROADHEIGHT = 300
 
 WIDTH = 800
@@ -23,7 +23,6 @@ GRASSHEIGHT = ROADHEIGHT + 2*(LANESIZE) #LANESIZE on each side
 ROADSTART = (HEIGHT-ROADHEIGHT)/2
 GRASSSTART = (HEIGHT - GRASSHEIGHT)/2
 
-
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('frogger')
 
@@ -32,6 +31,11 @@ alive = True
 
 # clock will be used to control how fast the screen updates
 clock = pygame.time.Clock()
+
+LANEARR = [((i*LANESIZE) + ROADSTART) for i in range(0,LANES)]
+Car = Car(LANES)
+
+
 
 # MAIN PROGRAM LOOP-----------------------
 while alive:
