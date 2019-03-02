@@ -5,6 +5,7 @@ import math
 pygame.init()
 
 # colors
+BLACK = (0,0,0)
 ROAD = (128,128,128)
 GRASS = (124, 252, 0)
 YELLOW = (250, 252, 0)
@@ -17,7 +18,7 @@ CAR_COLORS = [(178,34,34),(255,165,0),
               (255,0,255),(199,21,133)]
 
 #sizes
-LANES = 3
+LANES = 5
 ROADHEIGHT = 300
 
 WIDTH = 800
@@ -30,19 +31,18 @@ GRASSHEIGHT = ROADHEIGHT + 2*(LANESIZE) #LANESIZE on each side
 ROADSTART = (HEIGHT-ROADHEIGHT)/2
 GRASSSTART = (HEIGHT - GRASSHEIGHT)/2
 
-CAR_LENGTH_SCALE = 10 #scale from road length to car length
+CAR_LENGTH_SCALE = 12 #scale from road length to car length
 CAR_WIDTH_SCALE = 2 # scale from lane width to car width
 
 CAR_SPEED = 5
 CAR_SPAWN_DELAY = 30
 
+CAR_WHEEL_SCALE = 3
+
 CARS = []
 class Car(object):
-    
     def __init__(self,lane):
         self.lane = (lane)
-        
-        
         self.length = WIDTH/CAR_LENGTH_SCALE
         self.width = (LANESIZE/CAR_WIDTH_SCALE) #cars will ocupy half the lane
 
@@ -50,10 +50,23 @@ class Car(object):
         self.y = LANEARR[self.lane] + (LANESIZE-self.width)/2
         self.x = -((self.length)*2)
 
+        self.wheelDif = self.width/CAR_WHEEL_SCALE
+        self.wheelLength = self.wheelDif
+        self.wheelWidth = self.wheelLength/2 #2:1 aspect ratio of wheels
+
+
         self.color = random.choice(CAR_COLORS)
 
     def Draw(self):
         pygame.draw.rect(screen, self.color, [self.x, self.y, self.length, self.width], 0)
+        #wheels
+        pygame.draw.rect(screen, BLACK, [self.x + (self.wheelDif/2), self.y-(self.wheelWidth/2), self.wheelLength, self.wheelWidth])
+        pygame.draw.rect(screen, BLACK, [self.x + self.length - (self.wheelDif/2) - self.wheelLength, self.y-(self.wheelWidth/2), self.wheelLength, self.wheelWidth])
+        pygame.draw.rect(screen, BLACK, [self.x + (self.wheelDif/2), self.y + self.width -(self.wheelWidth/2), self.wheelLength, self.wheelWidth])
+        pygame.draw.rect(screen, BLACK, [self.x + self.length - (self.wheelDif/2) - self.wheelLength, self.y + self.width -(self.wheelWidth/2), self.wheelLength, self.wheelWidth])
+
+
+
         self.x += CAR_SPEED
 
 def spawnCar():
