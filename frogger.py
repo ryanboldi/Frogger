@@ -1,5 +1,6 @@
 import pygame
-from car import Car
+import random
+import math
 
 pygame.init()
 
@@ -23,6 +24,12 @@ GRASSHEIGHT = ROADHEIGHT + 2*(LANESIZE) #LANESIZE on each side
 ROADSTART = (HEIGHT-ROADHEIGHT)/2
 GRASSSTART = (HEIGHT - GRASSHEIGHT)/2
 
+
+class Car(object):
+    def __init__(self):
+        self.lane = math.floor(random.random() * len(LANEARR))
+        self.y = LANEARR[self.lane]
+        
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('frogger')
 
@@ -33,9 +40,7 @@ alive = True
 clock = pygame.time.Clock()
 
 LANEARR = [((i*LANESIZE) + ROADSTART) for i in range(0,LANES)]
-Car = Car(LANES)
-
-
+Car = Car(LANEARR)
 
 # MAIN PROGRAM LOOP-----------------------
 while alive:
@@ -66,3 +71,5 @@ while alive:
     clock.tick(60)
 
 pygame.quit()
+
+
