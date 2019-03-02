@@ -1,4 +1,5 @@
 import pygame
+from car import Car
 
 pygame.init()
 
@@ -54,9 +55,6 @@ while alive:
     #draws yellow line (lane)
     for i in range(1, LANES):
         pygame.draw.line(screen, YELLOW, [0, ROADSTART + (LANESIZE*i) - 0.5],[WIDTH, ROADSTART+(LANESIZE*i) - 0.5], 1)
-
-    
-
 
     # update screen
     pygame.display.flip()
