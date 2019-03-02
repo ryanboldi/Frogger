@@ -33,12 +33,14 @@ GRASSSTART = (HEIGHT - GRASSHEIGHT)/2
 CAR_LENGTH_SCALE = 10 #scale from road length to car length
 CAR_WIDTH_SCALE = 2 # scale from lane width to car width
 
-CAR_SPEED = 10
+CAR_SPEED = 5
+CAR_SPAWN_DELAY = 30
 
+CARS = []
 class Car(object):
     
-    def __init__(self):
-        self.lane = math.floor(random.random() * len(LANEARR))
+    def __init__(self,lane):
+        self.lane = (lane)
         
         
         self.length = WIDTH/CAR_LENGTH_SCALE
@@ -54,6 +56,10 @@ class Car(object):
         pygame.draw.rect(screen, self.color, [self.x, self.y, self.length, self.width], 0)
         self.x += CAR_SPEED
 
+def spawnCar():
+    lane = math.floor(random.random() * len(LANEARR))
+    c = Car(lane)
+    CARS[lane].append(c)
         
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('frogger')
@@ -65,10 +71,13 @@ alive = True
 clock = pygame.time.Clock()
 
 LANEARR = [((i*LANESIZE) + ROADSTART) for i in range(0,LANES)]
-car = Car()
+CARS = [[] for i in LANEARR]
 
+
+frameCount = 0
 # MAIN PROGRAM LOOP-----------------------
 while alive:
+    frameCount += 1
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             alive = False
@@ -80,7 +89,6 @@ while alive:
     pygame.draw.rect(screen, GRASS, [0, GRASSSTART, WIDTH, GRASSHEIGHT], 0)
     pygame.draw.rect(screen, (10,100,10), [-1, GRASSSTART, WIDTH+2, GRASSHEIGHT], 1)
 
-    
     #draws road
     pygame.draw.rect(screen, ROAD, [0, ROADSTART, WIDTH, ROADHEIGHT], 0)
     pygame.draw.rect(screen, (100,100,100), [-2, ROADSTART, WIDTH+4, ROADHEIGHT], 2)
@@ -90,12 +98,12 @@ while alive:
     for i in range(1, LANES):
         pygame.draw.line(screen, YELLOW, [0, ROADSTART + (LANESIZE*i) - 0.5],[WIDTH, ROADSTART+(LANESIZE*i) - 0.5], 1)
 
-
-    car.Draw()
-
-
-
-
+    for lane in CARS:
+        for car in lane:
+            car.Draw()
+    
+    if (frameCount % CAR_SPAWN_DELAY == 0):
+        spawnCar()
 
     # update screen
     pygame.display.flip()
