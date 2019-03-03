@@ -104,10 +104,8 @@ frameCount = 0
 while alive:
     frameCount += 1
 
-    for i in range(0, len(CARS)):
-        print("lane {} has {} cars".format(i, len(CARS[i])))
-
-
+    #for i in range(0, len(CARS)):
+    #    print("lane {} has {} cars".format(i, len(CARS[i])))
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
