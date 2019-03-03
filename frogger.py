@@ -90,6 +90,8 @@ def deleteCars():
                 del lane[ind]
             ind+=1
 
+playerX = WIDTH/2
+
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Frogger')
 
