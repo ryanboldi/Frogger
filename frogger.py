@@ -4,27 +4,28 @@ from car import Car
 pygame.init()
 
 # colors
-ROAD = (128,128,128)
+ROAD = (128, 128, 128)
 GRASS = (124, 252, 0)
 YELLOW = (250, 252, 0)
 SKY = (0, 250, 252)
 
 #sizes
-LANES = 3
+LANES = 4
 ROADHEIGHT = 300
 
+#screen sizes
 WIDTH = 800
 HEIGHT = 500
 
 LANESIZE = ROADHEIGHT/LANES
-GRASSHEIGHT = ROADHEIGHT + 2*(LANESIZE) #LANESIZE on each side
+GRASSHEIGHT = ROADHEIGHT + (2 * (LANESIZE)) #LANESIZE on each side
 
 #consts to help with runtime
 ROADSTART = (HEIGHT-ROADHEIGHT)/2
 GRASSSTART = (HEIGHT - GRASSHEIGHT)/2
 
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption('frogger')
+pygame.display.set_caption('Frogger')
 
 # checks if player is alive
 alive = True
@@ -32,10 +33,8 @@ alive = True
 # clock will be used to control how fast the screen updates
 clock = pygame.time.Clock()
 
-LANEARR = [((i*LANESIZE) + ROADSTART) for i in range(0,LANES)]
+LANEARR = [((i * LANESIZE) + ROADSTART) for i in range (0 , LANES)]
 Car = Car(LANES)
-
-
 
 # MAIN PROGRAM LOOP-----------------------
 while alive:
@@ -50,11 +49,9 @@ while alive:
     pygame.draw.rect(screen, GRASS, [0, GRASSSTART, WIDTH, GRASSHEIGHT], 0)
     pygame.draw.rect(screen, (10,100,10), [-1, GRASSSTART, WIDTH+2, GRASSHEIGHT], 1)
 
-    
     #draws road
     pygame.draw.rect(screen, ROAD, [0, ROADSTART, WIDTH, ROADHEIGHT], 0)
     pygame.draw.rect(screen, (100,100,100), [-2, ROADSTART, WIDTH+4, ROADHEIGHT], 2)
-
 
     #draws yellow line (lane)
     for i in range(1, LANES):
@@ -64,5 +61,4 @@ while alive:
     pygame.display.flip()
 
     clock.tick(60)
-
 pygame.quit()
