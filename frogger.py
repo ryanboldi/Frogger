@@ -4,6 +4,8 @@ import math
 
 pygame.init()
 
+FRAMERATE = 60
+
 # colors
 BLACK = (0, 0, 0)
 ROAD = (128, 128, 128)
@@ -40,8 +42,8 @@ CAR_SPAWN_DELAY = 30
 
 CAR_WHEEL_SCALE = 3
 
-CARS = []
-
+LANEARR = [((i * LANESIZE) + ROADSTART) for i in range(0, LANES)]
+CARS = [[] for i in LANEARR]
 
 class Car(object):
     def __init__(self, lane):
@@ -72,15 +74,21 @@ class Car(object):
             self.wheelWidth/2), self.wheelLength, self.wheelWidth])
         pygame.draw.rect(screen, BLACK, [self.x + self.length - (self.wheelDif/2) - self.wheelLength,
                                          self.y + self.width - (self.wheelWidth/2), self.wheelLength, self.wheelWidth])
-
         self.x += CAR_SPEED
-
 
 def spawnCar():
     lane = math.floor(random.random() * len(LANEARR))
     c = Car(lane)
     CARS[lane].append(c)
 
+def deleteCars():
+    #deletes all cars that are fully off-screen
+    for lane in CARS:
+        ind = 0
+        for car in lane:
+            if (car.x - car.width) > WIDTH:
+                del lane[ind]
+            ind+=1
 
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Frogger')
@@ -90,13 +98,17 @@ alive = True
 
 # clock will be used to control how fast the screen updates
 clock = pygame.time.Clock()
-
-LANEARR = [((i * LANESIZE) + ROADSTART) for i in range(0, LANES)]
-Car = Car(LANES)
+frameCount = 0
 
 # MAIN PROGRAM LOOP-----------------------
 while alive:
     frameCount += 1
+
+    for i in range(0, len(CARS)):
+        print("lane {} has {} cars".format(i, len(CARS[i])))
+
+
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             alive = False
@@ -123,12 +135,14 @@ while alive:
         for car in lane:
             car.Draw()
 
-    if (frameCount % CAR_SPAWN_DELAY == 0):
+    if (frameCount == CAR_SPAWN_DELAY):
         spawnCar()
+        deleteCars()
+        frameCount = 0
 
     # update screen
     pygame.display.flip()
 
-    clock.tick(60)
+    clock.tick(FRAMERATE)
 
 pygame.quit()
