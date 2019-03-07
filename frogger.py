@@ -18,6 +18,8 @@ CAR_COLORS = [(178, 34, 34), (255, 165, 0),
               (65, 105, 225), (138, 43, 226),
               (75, 0, 130), (128, 0, 128),
               (255, 0, 255), (199, 21, 133)]
+PLAYER = (0, 90, 90)
+
 
 # sizes
 LANES = 4
@@ -58,9 +60,9 @@ print("lane array = {}".format(LANEARR))
 print(playerLanes)
 
 playerX = WIDTH/2
-playerY = playerLanes[0]
-
-
+playerlane = len(playerLanes)-1
+print(playerlane)
+playerY = playerLanes[playerlane]
 
 class Car(object):
     def __init__(self, lane):
@@ -107,6 +109,9 @@ def deleteCars():
                 del lane[ind]
             ind+=1
 
+def drawPlayer():
+    playerWidth = LANESIZE/1.5
+    pygame.draw.rect(screen, PLAYER, [playerX + (LANESIZE - playerWidth)/2,  playerY +(LANESIZE - playerWidth)/2, playerWidth,playerWidth])
 
 
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -129,6 +134,17 @@ while alive:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             alive = False
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_UP:
+                if(playerlane > 0):
+                    playerlane -= 1
+            if event.key == pygame.K_DOWN:
+                if(playerlane  < len(playerLanes)-1):
+                    playerlane += 1
+            if event.key == pygame.K_RIGHT:
+                playerX += LANESIZE
+            if event.key == pygame.K_LEFT:
+                playerX -= LANESIZE
 
     # draws background
     screen.fill(SKY)
@@ -151,6 +167,10 @@ while alive:
     for lane in CARS:
         for car in lane:
             car.Draw()
+
+    playerY = playerLanes[playerlane]
+    drawPlayer()
+
 
     if (frameCount == CAR_SPAWN_DELAY):
         spawnCar()
