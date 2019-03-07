@@ -89,8 +89,17 @@ def deleteCars():
             if (car.x - car.width) > WIDTH:
                 del lane[ind]
             ind+=1
+            
+playerLanes = []
+playerLanes = LANEARR
+playerLanes.append(LANEARR[-1] + LANESIZE)
+playerLanes.insert(0, LANEARR[0] - LANESIZE)
+
+print(LANEARR)
+print(playerLanes)
 
 playerX = WIDTH/2
+playerY = playerLanes[0]
 
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Frogger')
