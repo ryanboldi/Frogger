@@ -45,6 +45,23 @@ CAR_WHEEL_SCALE = 3
 LANEARR = [((i * LANESIZE) + ROADSTART) for i in range(0, LANES)]
 CARS = [[] for i in LANEARR]
 
+playerLanes = []
+playerLanes = list.copy(LANEARR)
+
+print (LANEARR)
+print(playerLanes)
+
+playerLanes.append((LANEARR[-1] + LANESIZE))
+playerLanes.insert(0, (LANEARR[0] - LANESIZE))
+
+print("lane array = {}".format(LANEARR))
+print(playerLanes)
+
+playerX = WIDTH/2
+playerY = playerLanes[0]
+
+
+
 class Car(object):
     def __init__(self, lane):
         self.lane = (lane)
@@ -89,17 +106,8 @@ def deleteCars():
             if (car.x - car.width) > WIDTH:
                 del lane[ind]
             ind+=1
-            
-playerLanes = []
-playerLanes = LANEARR
-playerLanes.append(LANEARR[-1] + LANESIZE)
-playerLanes.insert(0, LANEARR[0] - LANESIZE)
 
-print(LANEARR)
-print(playerLanes)
 
-playerX = WIDTH/2
-playerY = playerLanes[0]
 
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Frogger')
