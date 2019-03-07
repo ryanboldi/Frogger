@@ -119,32 +119,32 @@ pygame.display.set_caption('Frogger')
 
 # checks if player is alive
 alive = True
-
+MoveAble = False
 # clock will be used to control how fast the screen updates
 clock = pygame.time.Clock()
 frameCount = 0
-
+count = 0
 # MAIN PROGRAM LOOP-----------------------
 while alive:
     frameCount += 1
 
     #for i in range(0, len(CARS)):
     #    print("lane {} has {} cars".format(i, len(CARS[i])))
-
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             alive = False
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_UP:
-                if(playerlane > 0):
-                    playerlane -= 1
-            if event.key == pygame.K_DOWN:
-                if(playerlane  < len(playerLanes)-1):
-                    playerlane += 1
-            if event.key == pygame.K_RIGHT:
-                playerX += LANESIZE
-            if event.key == pygame.K_LEFT:
-                playerX -= LANESIZE
+            if MoveAble:
+                if event.key == pygame.K_UP:
+                    if(playerlane > 0):
+                        playerlane -= 1
+                if event.key == pygame.K_DOWN:
+                    if(playerlane  < len(playerLanes)-1):
+                        playerlane += 1
+                if event.key == pygame.K_RIGHT:
+                    playerX += LANESIZE
+                if event.key == pygame.K_LEFT:
+                    playerX -= LANESIZE
 
     # draws background
     screen.fill(SKY)
@@ -171,11 +171,17 @@ while alive:
     playerY = playerLanes[playerlane]
     drawPlayer()
 
-
     if (frameCount == CAR_SPAWN_DELAY):
         spawnCar()
         deleteCars()
         frameCount = 0
+        if count < 5:
+            count += 1
+        
+        print(count)
+        if count == 5:
+            print(MoveAble)
+            MoveAble = True
 
     # update screen
     pygame.display.flip()
