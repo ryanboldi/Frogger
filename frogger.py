@@ -32,6 +32,7 @@ HEIGHT = 500
 LANESIZE = ROADHEIGHT/LANES
 GRASSHEIGHT = ROADHEIGHT + (2 * (LANESIZE))  # LANESIZE on each side
 
+
 # consts to help with runtime
 ROADSTART = (HEIGHT-ROADHEIGHT)/2
 GRASSSTART = (HEIGHT - GRASSHEIGHT)/2
@@ -40,6 +41,7 @@ CAR_LENGTH_SCALE = 12  # scale from road length to car length
 CAR_WIDTH_SCALE = 2  # scale from lane width to car width
 
 CAR_SPEED = 5
+X_SPEED = 20
 CAR_SPAWN_DELAY = 30
 
 CAR_WHEEL_SCALE = 3
@@ -111,7 +113,7 @@ def deleteCars():
 
 def drawPlayer():
     playerWidth = LANESIZE/1.5
-    pygame.draw.rect(screen, PLAYER, [playerX + (LANESIZE - playerWidth)/2,  playerY +(LANESIZE - playerWidth)/2, playerWidth,playerWidth])
+    pygame.draw.rect(screen, PLAYER, [playerX + (LANESIZE - playerWidth)/2,  playerY +(LANESIZE - playerWidth)/2, playerWidth/1.5, playerWidth])
 
 
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -142,9 +144,9 @@ while alive:
                     if(playerlane  < len(playerLanes)-1):
                         playerlane += 1
                 if event.key == pygame.K_RIGHT:
-                    playerX += LANESIZE
+                    playerX += X_SPEED
                 if event.key == pygame.K_LEFT:
-                    playerX -= LANESIZE
+                    playerX -= X_SPEED
 
     # draws background
     screen.fill(SKY)
