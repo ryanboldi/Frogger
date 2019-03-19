@@ -40,9 +40,9 @@ GRASSSTART = (HEIGHT - GRASSHEIGHT)/2
 CAR_LENGTH_SCALE = 12  # scale from road length to car length
 CAR_WIDTH_SCALE = 2  # scale from lane width to car width
 
-CAR_SPEED = 5
+CAR_SPEED = 7
 X_SPEED = 20
-CAR_SPAWN_DELAY = 30
+CAR_SPAWN_DELAY = 20
 
 CAR_WHEEL_SCALE = 3
 
